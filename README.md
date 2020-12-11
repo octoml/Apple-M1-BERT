@@ -1,4 +1,4 @@
-# Apple-M1-BERT
+# Apple-M1-BERT Inference
 
 ### Benchmark Apple TensorFlow with MLCompute
 1. Install [Apple TensorFlow MacOS](https://github.com/apple/tensorflow_macos) on M1.
@@ -51,7 +51,7 @@ Mean inference time (std dev): 41.68 ms (0.34 ms)
 ### Why TVM much faster than Apple TensorFlow with MLCompute?
 - TVM AutoScheduler is able to using machine learning to search out CPU/GPU code optimization; Human experts programmer are not able to cover all optimizations.
 - TVM is able to fuse any subgraphs qualified of computation nature and directly generate code for the target; Human experts are only able to manually add fusing patterns, manually optimize certain subgraph.
-- We visualized `bert-base-uncased` graph in Apple TensorFlow. Here is a ![sample block](assets/tf_block.png).
+- We visualized `bert-base-uncased` graph in Apple TensorFlow. Here is a sample block in BERT.![sample block](assets/tf_block.png)
   As we can see, MLCompute tried to rewrite a TF graph, replace some operators to what it [supports](https://developer.apple.com/documentation/mlcompute/layers)
   In real practice perfect covert is alway hard, in BERT case, we can see `MatMul` operator is swapped to `MLCMatMul`, `LayerNorm` operator is swapped to `MLCLayerNorm`, while all others operators are not covered by MLCompute. In GPU case, data is copied between CPU and GPU almost in every step. On the other hand, TVM directly generates ALL operators on GPU, so it is able to maximize gpu utilization.
 
