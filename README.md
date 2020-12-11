@@ -48,8 +48,8 @@ Evaluate inference time cost...
 Mean inference time (std dev): 41.68 ms (0.34 ms)
 ```
 
-### Why TVM much faster than Apple TensorFlow with MLCompute?
-- TVM AutoScheduler is able to using machine learning to search out CPU/GPU code optimization; Human experts programmer are not able to cover all optimizations.
+### Why is TVM much faster than Apple TensorFlow with MLCompute?
+- TVM AutoScheduler is able to using machine learning to search out CPU/GPU code optimization; Human experts are not able to cover all optimizations.
 - TVM is able to fuse any subgraphs qualified of computation nature and directly generate code for the target; Human experts are only able to manually add fusing patterns, manually optimize certain subgraph.
 - We visualized `bert-base-uncased` graph in Apple TensorFlow. Here is a sample block in BERT.![sample block](assets/tf_block.png)
   As we can see, MLCompute tried to rewrite a TF graph, replace some operators to what it [supports](https://developer.apple.com/documentation/mlcompute/layers)
