@@ -4,8 +4,9 @@
 1. Install [Apple TensorFlow MacOS](https://github.com/apple/tensorflow_macos) on M1.
 2. Install [Rust](https://www.rust-lang.org/tools/install)
 3. Activate tf venv, install HuggingFace by `pip install transformers`
-4. Get CPU benchmark ("Keras Runtime: xxx ms.") by running `python apple_tf.py cpu`
-5. Get GPU benchmark ("Keras Runtime: xxx ms.") by running `python apple_tf.py gpu`
+4. Dump `bert-base-uncased` model into a graph by running `python dump_tf.py`
+4. Get CPU benchmark ("Graph Runtime: xxx ms.") by running `python run_tf.py cpu`
+5. Get GPU benchmark ("Graph Runtime: xxx ms.") by running `python run_tf.py gpu`
 
 ### Running TVM AutoScheduler Search
 We provide `search_dense_cpu.py` and `search_dense_gpu.py` for searching on M1 CPU and M1 GPU. Both scripts are using RPC. If you plan to run on M1 Mac Mini, run these commands in two terminal windows before running scripts.
