@@ -12,10 +12,11 @@ def load_keras_model(module, name, seq_len, batch_size, report_runtime=True):
     dummy_input = tf.keras.Input(
         shape=[seq_len], batch_size=batch_size, dtype="int32")
     dummy_out = model(dummy_input)  # Propagate shapes through the keras model.
+    np_input = np.random.randint(0, 10000, size=[batch_size, seq_len]).astype(np.int32)
     start = time.time()
     repeats = 50
     for i in range(repeats):
-        dummy_out = model(dummy_input)
+        dummy_out = model(np_input)
     end = time.time()
     print("Keras Runtime: %f ms." % (1000 * ((end - start) / repeats)))
     return model
@@ -41,6 +42,17 @@ def download_model(name, batch_size, seq_len):
 
 
 if __name__ == "__main__":
+    # We enable MLC device selection for Keras, defualt use CPU
+    from tensorflow.python.compiler.mlcompute import mlcompute
+    if len(sys.argv) == 1:
+        mlcompute.set_mlc_device(device_name='cpu')
+    else:
+        if sys.argv[1] == "cpu":
+            mlcompute.set_mlc_device(device_name='cpu')
+        elif sys.argv[1] == "gpu":
+            mlcompute.set_mlc_device(device_name='gpu')
+        else:
+            raise Exception()
     # The name of the transformer model to download and run.
     #name = "huggingface/prunebert-base-uncased-6-finepruned-w-distil-squad"
     name = "bert-base-uncased"

@@ -13,9 +13,10 @@ def run_graph_model(frozen_graph, batch_size, seq_len):
     with tf.compat.v1.Session(graph=g) as sess:
         dummy_input = np.random.randint(0, 10000, size=[batch_size, seq_len]).astype(np.int32)
         x = tf.compat.v1.get_default_graph().get_tensor_by_name('x:0')
+        # Warm up
         _ = sess.run(fetches=["tf_bert_for_sequence_classification/classifier/BiasAdd:0"],
                                 feed_dict={x: dummy_input})
-
+        # real test
         start = time.time()
         for i in range(repeats):
             _ = sess.run(fetches=["tf_bert_for_sequence_classification/classifier/BiasAdd:0"],

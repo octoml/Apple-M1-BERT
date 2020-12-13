@@ -4,7 +4,7 @@
 1. Install [Apple TensorFlow MacOS](https://github.com/apple/tensorflow_macos) on M1.
 2. Install [Rust](https://www.rust-lang.org/tools/install)
 3. Activate tf venv, install HuggingFace by `pip install transformers`
-4. Dump `bert-base-uncased` model into a graph by running `python dump_tf.py`
+4. Dump `bert-base-uncased` model into a graph by running `python dump_tf.py`. This script will print out Keras inference time. If you want to check GPU inference time, run `python dump_tf.py gpu`. Sample output for GPU Keras: `Keras Runtime: 1871.522560 ms.`
 4. Get CPU benchmark by running `python run_tf.py cpu`. Sample output: `Graph Runtime: 512.14 ms.`
 5. Get GPU benchmark by running `python run_tf.py gpu`. Sample output: `Graph Runtime: 542.58 ms.`
 
