@@ -11,7 +11,10 @@
 ### Running TVM AutoScheduler Search
 We provide `search_dense_cpu.py` and `search_dense_gpu.py` for searching on M1 CPU and M1 GPU. Both scripts are using RPC. If you plan to run on M1 Mac Mini, run these commands in two terminal windows before running scripts.
 
-Warning: Searching Metal schedule requires AutoScheduler correctness check feature, which is not merged into TVM main branch yet.
+Warning: Searching Metal schedule requires AutoScheduler correctness check feature, which is not yet merged into TVM main branch yet. If you really want to try it today, you can use the branch at https://github.com/antinucleon/tvm/tree/metal
+
+We will remove this warning once this feature is merged into main branch.
+
 1. Start RPC Tracker: `python -m tvm.exec.rpc_tracker --host 0.0.0.0 --port 9190`
 2. Start RPC Server: `python -m tvm.exec.rpc_server --tracker 127.0.0.1:9190 --port 9090 --key m1 --no-fork`
 3. Delete searched log in `./assets`, run scripts.
