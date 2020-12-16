@@ -31,7 +31,7 @@ def main(model_name, device):
     ]
 
     mean, std = tf_utils.measure(run_keras, run_args)
-    print("Mean Inference time (std dev) on {device}: {mean_time} ms ({std} ms)".format(
+    print("[Keras] Mean Inference time (std dev) on {device}: {mean_time} ms ({std} ms)".format(
         device=device, mean_time=mean, std=std
     ))
 

@@ -4,14 +4,16 @@
 1. Install [Apple TensorFlow MacOS](https://github.com/apple/tensorflow_macos) on M1.
 2. Install [Rust](https://www.rust-lang.org/tools/install)
 3. Activate tf venv, install HuggingFace by `pip install transformers`
-4. Dump `bert-base-uncased` model into a graph by running `python dump_tf.py`. This script will print out Keras inference time. If you want to check GPU inference time, run `python dump_tf.py gpu`. Sample output for GPU Keras: `Keras Runtime: 1871.522560 ms.`
-4. Get CPU benchmark by running `python run_tf.py cpu`. Sample output: `Graph Runtime: 512.14 ms.`
-5. Get GPU benchmark by running `python run_tf.py gpu`. Sample output: `Graph Runtime: 542.58 ms.`
+4. Dump `bert-base-uncased` model into a graph by running `python dump_tf_graph.py`. 
+5. Get Keras CPU benchmark by running `python run_keras.py --device cpu`. Sample output: `[Keras] Mean Inference time (std dev) on cpu: 579.0056343078613 ms (20.846548561801576 ms)`
+6. Get Keras GPU benchmark by running `python run_keras.py --device gpu`. Sample output: `[Keras] Mean Inference time (std dev) on gpu: 1767.4337482452393 ms (27.00876036973127 ms)`
+7. Get CPU benchmark by running `python run_graphdef.py --device cpu --graph-path ./models/bert-base-uncased.pb`. Sample output: `[Graphdef] Mean Inference time (std dev) on cpu: 512.3187007904053 ms (6.115432898641167 ms)`
+8. Get GPU benchmark by running `python run_graphdef.py --device gpu --graph-path ./models/bert-base-uncased.pb`. Sample output: `[Graphdef] Mean Inference time (std dev) on gpu: 543.5237417221069 ms (4.210226676450006 ms)`
 
 ### Running TVM AutoScheduler Search
 We provide `search_dense_cpu.py` and `search_dense_gpu.py` for searching on M1 CPU and M1 GPU. Both scripts are using RPC. If you plan to run on M1 Mac Mini, run these commands in two terminal windows before running scripts.
 
-Warning: Searching Metal schedule requires AutoScheduler correctness check feature, which is not yet merged into TVM main branch yet. If you really want to try it today, you can use the branch at https://github.com/antinucleon/tvm/tree/metal
+Warning: Searching Metal schedule requires AutoScheduler correctness check feature, which is not yet merged into TVM main branch yet. If you really want to try it today, you can use the unstable experimental branch at https://github.com/antinucleon/tvm/tree/metal
 
 We will remove this warning once this feature is merged into main branch.
 
@@ -51,10 +53,10 @@ Evaluate inference time cost...
 Mean inference time (std dev): 41.68 ms (0.34 ms)
 ```
 
-### Why TVM much faster than Apple TensorFlow with MLCompute?
-- TVM AutoScheduler is able to using machine learning to search out CPU/GPU code optimization; Human experts programmer are not able to cover all optimizations.
+### Why is TVM much faster than Apple TensorFlow with MLCompute?
+- TVM AutoScheduler is able to using machine learning to search out CPU/GPU code optimization; Human experts are not able to cover all optimizations.
 - TVM is able to fuse any subgraphs qualified of computation nature and directly generate code for the target; Human experts are only able to manually add fusing patterns, manually optimize certain subgraph.
-- We visualized `bert-base-uncased` graph in Apple TensorFlow. Here is a sample block in BERT.![sample block](assets/tf_block.png)
+- We visualized `bert-base-uncased` graph in Apple TensorFlow. Here is a sample block in BERT. ![sample block](assets/tf_block.png)
   As we can see, MLCompute tried to rewrite a TF graph, replace some operators to what it [supports](https://developer.apple.com/documentation/mlcompute/layers)
   In real practice perfect covert is alway hard, in BERT case, we can see `MatMul` operator is swapped to `MLCMatMul`, `LayerNorm` operator is swapped to `MLCLayerNorm`, while all others operators are not covered by MLCompute. In GPU case, data is copied between CPU and GPU almost in every step. On the other hand, TVM directly generates ALL operators on GPU, so it is able to maximize gpu utilization.
 

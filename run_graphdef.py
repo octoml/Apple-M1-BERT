@@ -45,7 +45,7 @@ def main(graph_path, device):
             feed_dict
         ]
         mean, std = tf_utils.measure(run_graph, run_args)
-    print("Mean Inference time (std dev) on {device}: {mean_time} ms ({std} ms)".format(
+    print("[Graphdef] Mean Inference time (std dev) on {device}: {mean_time} ms ({std} ms)".format(
         device=device, mean_time=mean, std=std
     ))
 
