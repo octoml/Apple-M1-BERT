@@ -1,5 +1,19 @@
 # Apple-M1-BERT Inference
 
+### Update on Dec 21, 2020
+
+By fixing `opt-level` bug in gpu inference script, we got a result on GPU inference. Now the result is:
+```
+% python search_dense_gpu.py 
+Extract tasks...
+Compile...
+[23:27:38] /Users/bingxu/project/tvm/src/runtime/metal/metal_device_api.mm:138: Intializing Metal device 0, name=Apple M1
+Upload
+run
+Evaluate inference time cost...
+Mean inference time (std dev): 29.93 ms (0.19 ms)
+```
+
 ### Benchmark Apple TensorFlow with MLCompute
 1. Install [Apple TensorFlow MacOS](https://github.com/apple/tensorflow_macos) on M1.
 2. Install [Rust](https://www.rust-lang.org/tools/install)
