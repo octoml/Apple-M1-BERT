@@ -124,4 +124,4 @@ If you decide not to run a search and use the provided pre-searched logs from Au
   In real practice perfect covert is alway hard, in BERT case, we can see `MatMul` operator is swapped to `MLCMatMul`, `LayerNorm` operator is swapped to `MLCLayerNorm`, while all others operators are not covered by MLCompute. In GPU case, data is copied between CPU and GPU almost in every step. On the other hand, TVM directly generates ALL operators on GPU, so it is able to maximize gpu utilization.
 
 
-If you'd like to learn more about TVM please visit our Apache Project [site](https://tvm.apache.org/) or the [OctoML] site(https://octoml.ai/) as well as our OctoML's [blog](https://octoml.ai/blog/). 
+If you'd like to learn more about TVM please visit our Apache Project [site](https://tvm.apache.org/) or the [OctoML](https://octoml.ai/) site as well as our OctoML's [blog](https://octoml.ai/blog/). 
