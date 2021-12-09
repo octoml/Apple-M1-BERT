@@ -24,8 +24,6 @@ def run_tuning(tasks, task_weights, log_file):
     tuner = auto_scheduler.TaskScheduler(tasks, task_weights)
     tune_option = auto_scheduler.TuningOptions(
         num_measure_trials=20000,
-        check_correctness=True,
-        builder_n_parallel=1,
         runner=measure_runner,
         measure_callbacks=[auto_scheduler.RecordToFile(log_file)],
         verbose=2,
@@ -76,8 +74,8 @@ if __name__ == "__main__":
     print("run")
     input_shape = [1, 128]
     dtype = "int64"
-    ctx = remote.context(str(target), 0)
-    module = runtime.GraphModule(rlib["default"](ctx))
+    ctx = remote.device(str(target), 0)
+    module = runtime.graph_executor.GraphModule(rlib["default"](ctx))
     data_tvm = tvm.nd.array(
         (np.random.uniform(size=input_shape, low=0, high=10000)).astype(dtype))
     module.set_input("input_ids", data_tvm)

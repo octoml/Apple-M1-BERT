@@ -13,7 +13,7 @@ relay_params = "_pt_model.params"
 
 model_class = transformers.BertModel
 tokenizer_class = transformers.BertTokenizer
-model = model_class.from_pretrained(weight)
+model = model_class.from_pretrained(weight, return_dict=False)
 model.eval()
 
 input_shape = [batch_size, 128]

@@ -9,11 +9,10 @@ import time
 @click.option("--graph-path", required=True)
 @click.option('--device', required=True, help="device will be used, [cpu] or [gpu]")
 def main(graph_path, device):
-    from tensorflow.python.compiler.mlcompute import mlcompute
     if device == "cpu":
-        mlcompute.set_mlc_device(device_name='cpu')
+        tf.config.experimental.set_visible_devices([], 'GPU')
     elif device == "gpu":
-        mlcompute.set_mlc_device(device_name='gpu')
+        tf.device('/gpu:0')
     else:
         raise Exception("Unknown devices")    
     batch_size = 1
