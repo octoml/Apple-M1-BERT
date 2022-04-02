@@ -2,6 +2,7 @@
 
 
 ### Setup Environment:
+This tutorial assumes you have git already installed in your Mac.  
 
 1. Install Miniforge from their official [page] (https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh)
 
@@ -57,7 +58,9 @@ USE_OPENMP gnu
 Build TVM
 
 ```
-make -DCMAKE_OSX_ARCHITECTURES=arm64 ..
+cd ./build
+cmake -DCMAKE_OSX_ARCHITECTURES=arm64 ..
+make
 ```
 
 Set the following environment variables or add to `~/.zshrc` for persistency:
@@ -66,7 +69,12 @@ Set the following environment variables or add to `~/.zshrc` for persistency:
 export TVM_HOME=/Users/tvmuser/git/tvm
 export PYTHONPATH=$TVM_HOME/python:${PYTHONPATH}
 ```
-
+Clone this repo:
+```
+cd ../..
+git clone https://github.com/octoml/Apple-M1-BERT.git
+cd ./Apple-M1-BERT
+```
 **For more details on setting up TensorFlow on MacOS click [here](https://developer.apple.com/metal/tensorflow-plugin/)**
 
 ### Run the TF and Keras benchmarks:
